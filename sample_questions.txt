@@ -1,0 +1,7 @@
+Which products from UrbanStep are supplied by Global Traders?
+Which customers bought products from TechNova?
+What products under 500 rupees are in the Grocery category?
+Which vendors supply products that Priya Nair ordered?
+Where does the word banana appear in the knowledge graph and how many times?
+Which orders were paid by COD and who placed them?
+Which products are out of stock?

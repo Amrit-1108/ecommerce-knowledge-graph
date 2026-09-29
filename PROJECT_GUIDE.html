@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GraphMind · Project Guide</title>
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --text: #1b1e2e;
+    --muted: #5f6680;
+    --border: #e3e5ef;
+    --accent: #6d5dfc;
+    --accent-soft: #efedff;
+    --green: #0f9d76;
+    --green-soft: #e6f7f1;
+    --amber: #b7791f;
+    --amber-soft: #fdf5e6;
+    --code: #f3f2ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.65; font-size: 16px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 20px 80px; }
+  header h1 { font-size: 34px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -0.02em; }
+  header p { color: var(--muted); margin: 0; font-size: 17px; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 8px; }
+  nav a {
+    font-size: 13px; text-decoration: none; color: var(--accent); background: var(--accent-soft);
+    padding: 5px 12px; border-radius: 999px;
+  }
+  nav a:hover { background: var(--accent); color: #fff; }
+
+  section { margin-top: 44px; }
+  h2 { font-size: 24px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  h2 .num { color: var(--accent); margin-right: 8px; }
+  .lead { color: var(--muted); margin: 0 0 18px; }
+  h3 { font-size: 17px; margin: 22px 0 6px; }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; margin: 14px 0; }
+  .tip { background: var(--green-soft); border: 1px solid #bfe8d9; border-radius: 12px; padding: 14px 18px; margin: 14px 0; }
+  .tip b:first-child { color: var(--green); }
+  .warn { background: var(--amber-soft); border: 1px solid #f1dcb3; border-radius: 12px; padding: 14px 18px; margin: 14px 0; }
+  .warn b:first-child { color: var(--amber); }
+
+  code { background: var(--code); padding: 1px 6px; border-radius: 5px; font-size: 14px; font-family: "Cascadia Code", Consolas, monospace; }
+  pre {
+    background: #1d1f2e; color: #e3e5f3; border-radius: 12px; padding: 16px 18px; overflow-x: auto;
+    font-size: 13.5px; line-height: 1.55; font-family: "Cascadia Code", Consolas, monospace; margin: 12px 0;
+  }
+  pre .c { color: #8a90b0; }
+
+  /* flow diagram */
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 18px 0; }
+  .box {
+    background: var(--card); border: 2px solid var(--accent); border-radius: 12px;
+    padding: 10px 14px; font-weight: 600; font-size: 14px; text-align: center;
+  }
+  .box small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+  .box.llm { border-color: #ec4899; }
+  .box.graph { border-color: var(--green); }
+  .arrow { color: var(--muted); font-size: 20px; }
+
+  /* step list */
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+  .steps > li {
+    counter-increment: step; position: relative; padding: 18px 20px 18px 66px; margin: 12px 0;
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  }
+  .steps > li::before {
+    content: counter(step); position: absolute; left: 18px; top: 18px; width: 32px; height: 32px;
+    border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700;
+    display: grid; place-items: center;
+  }
+  .steps h3 { margin: 2px 0 6px; }
+  .steps p { margin: 6px 0; }
+  .file { font-size: 12px; color: var(--accent); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .table-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: 14px; }
+
+  details { background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin: 10px 0; }
+  summary { cursor: pointer; padding: 14px 18px; font-weight: 600; list-style: none; }
+  summary::before { content: "＋"; color: var(--accent); margin-right: 10px; }
+  details[open] summary::before { content: "－"; }
+  details .ans { padding: 0 18px 16px 44px; color: #33384d; }
+  details .ans p { margin: 6px 0; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; text-align: center; }
+  .stat b { display: block; font-size: 26px; color: var(--accent); }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  ul.clean { padding-left: 20px; }
+  ul.clean li { margin: 6px 0; }
+  footer { margin-top: 60px; color: var(--muted); font-size: 13px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>GraphMind: how this project works</h1>
+  <p>A plain-English guide to the e-commerce knowledge graph project: what it does, how a question travels through it, and what to say in an interview.</p>
+  <nav>
+    <a href="#what">What it is</a>
+    <a href="#words">Key words</a>
+    <a href="#flow">End-to-end flow</a>
+    <a href="#files">The files</a>
+    <a href="#why">Design decisions</a>
+    <a href="#banana">Banana rule</a>
+    <a href="#problems">Problems I solved</a>
+    <a href="#limits">Limitations</a>
+    <a href="#questions">Interview Q&amp;A</a>
+    <a href="#demo">Demo script</a>
+    <a href="#cheat">Cheat sheet</a>
+  </nav>
+</header>
+
+<!-- 1 -->
+<section id="what">
+  <h2><span class="num">1</span>What the project is, in one minute</h2>
+  <p class="lead">Think of a small online shop with products, brands, vendors, customers and orders.</p>
+  <div class="card">
+    <p>Normally that data sits in tables. In this project it's stored as a <b>knowledge graph</b>: a web of <b>things</b> (a product, a brand, a customer) joined by <b>relationships</b> ("Running Shoes is <i>made by</i> UrbanStep", "Order O1 was <i>placed by</i> Rahul").</p>
+    <p>You can ask the system a question in normal English, like <i>"Which customers bought TechNova products?"</i>. An AI model turns the question into a search on the graph. The program runs that search and finds the matching data. The AI then writes a short answer <b>using only the data that was found</b>, so it can't make things up.</p>
+    <p>A web page lets you chat with it and shows the graph, lighting up the nodes used in each answer.</p>
+  </div>
+  <div class="tip"><b>Simple analogy:</b> The graph is a library. The first AI call is a helper who turns your question into an exact search slip. The Python code is the librarian who fetches only those books. The second AI call reads only those books and answers you. It isn't allowed to answer from memory.</div>
+</section>
+
+<!-- 2 -->
+<section id="words">
+  <h2><span class="num">2</span>Key words, explained simply</h2>
+  <p class="lead">If an interviewer uses one of these words, this is what it means here.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Word</th><th>Plain meaning</th><th>In this project</th></tr>
+      <tr><td><b>Knowledge graph</b></td><td>Data stored as dots joined by labelled lines.</td><td>38 dots and 65 lines about a shop.</td></tr>
+      <tr><td><b>Node</b></td><td>One "thing" (a dot).</td><td>A product, brand, category, vendor, customer or order.</td></tr>
+      <tr><td><b>Edge / relationship</b></td><td>A labelled line between two nodes.</td><td><code>MADE_BY</code>, <code>BELONGS_TO</code>, <code>SUPPLIED_BY</code>, <code>PLACED_BY</code>, <code>CONTAINS</code></td></tr>
+      <tr><td><b>Properties</b></td><td>Details stored on a node.</td><td>A product has name, price, stock.</td></tr>
+      <tr><td><b>Schema</b></td><td>A summary of which kinds of nodes and relationships exist.</td><td>Built automatically from the graph and given to the AI.</td></tr>
+      <tr><td><b>NetworkX</b></td><td>A Python library for building graphs in memory.</td><td>Holds the whole graph while the app runs.</td></tr>
+      <tr><td><b>LLM</b></td><td>Large Language Model: an AI that reads and writes text.</td><td><code>openai/gpt-oss-120b</code>, a free open-source model.</td></tr>
+      <tr><td><b>Groq</b></td><td>A company that runs open-source AI models in the cloud, fast, with a free tier.</td><td>Where our LLM runs. We call it with an API key.</td></tr>
+      <tr><td><b>FastAPI</b></td><td>A Python library for building web APIs (web addresses your code answers).</td><td>Serves <code>/ask</code>, <code>/graph</code> and the web page.</td></tr>
+      <tr><td><b>Graph query</b></td><td>Instructions for what to find in the graph.</td><td>A small JSON object the AI writes (see step 3 below).</td></tr>
+      <tr><td><b>Grounding</b></td><td>Making the AI answer only from given data.</td><td>The second AI call only sees the retrieved nodes.</td></tr>
+      <tr><td><b>Hallucination</b></td><td>When an AI makes up facts that sound right but are wrong.</td><td>Grounding is how we prevent it.</td></tr>
+      <tr><td><b>RAG</b></td><td>Retrieval-Augmented Generation: find data first, then let the AI answer from it.</td><td>This project is "Graph RAG": the data comes from a graph.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="flow">
+  <h2><span class="num">3</span>The end-to-end flow</h2>
+  <p class="lead">The task described it as: User Question → LLM → Graph Query → Retrieve Data → LLM → Answer.</p>
+
+  <div class="flow">
+    <div class="box">Question<small>user types</small></div><span class="arrow">→</span>
+    <div class="box llm">LLM call #1<small>writes the query</small></div><span class="arrow">→</span>
+    <div class="box graph">Graph query<small>JSON</small></div><span class="arrow">→</span>
+    <div class="box graph">Retrieve<small>Python walks graph</small></div><span class="arrow">→</span>
+    <div class="box llm">LLM call #2<small>answers from data</small></div><span class="arrow">→</span>
+    <div class="box">Answer<small>+ graph lights up</small></div>
+  </div>
+
+  <p>Here is one real question followed all the way through: <b>"Which customers bought products from TechNova?"</b></p>
+
+  <ol class="steps">
+    <li>
+      <span class="file">data/ecommerce.json → graph.py · build_graph()</span>
+      <h3>Before any question: the graph is built</h3>
+      <p>When the server starts, it reads <code>data/ecommerce.json</code>. Every record (each product, brand, customer…) becomes a <b>node</b>. The file also has a <code>relationships</code> list, which says things like "the <code>brand</code> field of a Product points to a Brand, call that link <code>MADE_BY</code>". Those fields become <b>edges</b>.</p>
+      <p>Result: 38 nodes and 65 edges held in memory by NetworkX.</p>
+    </li>
+    <li>
+      <span class="file">static/index.html → main.py · POST /ask</span>
+      <h3>The user asks a question</h3>
+      <p>The web page sends the question text to the <code>/ask</code> address on our FastAPI server.</p>
+    </li>
+    <li>
+      <span class="file">llm.py · question_to_query()</span>
+      <h3>LLM call #1: turn English into a graph query</h3>
+      <p>We send the AI three things: the question, the <b>schema</b> (which node types, properties and relationships exist, generated from the graph itself), and the rules of our small query format. We ask for JSON back, and Groq's "JSON mode" makes sure it is valid JSON.</p>
+      <p>The AI replied with:</p>
+<pre>{
+  "find": "Customer",                          <span class="c">// what we want back</span>
+  "related": [{
+    "path": ["PLACED_BY", "CONTAINS", "MADE_BY"], <span class="c">// Customer ← Order → Product → Brand</span>
+    "find": "Brand",
+    "where": {"name": "TechNova"}               <span class="c">// ...ending at TechNova</span>
+  }]
+}</pre>
+      <p>In words: <i>"Give me customers where, if you follow placed-by → contains → made-by, you reach the brand TechNova."</i></p>
+    </li>
+    <li>
+      <span class="file">graph.py · run_query()</span>
+      <h3>Retrieve: Python walks the graph</h3>
+      <p>Our own code, not the AI, now looks at every node:</p>
+      <ul class="clean">
+        <li>Is it a <b>Customer</b>? If not, skip it.</li>
+        <li>From this customer, follow <code>PLACED_BY</code> to their orders, then <code>CONTAINS</code> to the products in those orders, then <code>MADE_BY</code> to those products' brands.</li>
+        <li>Is one of those brands named TechNova? If yes, keep this customer.</li>
+      </ul>
+      <p>We found <b>3 customers</b>: Rahul Sharma, Priya Nair and Sneha Reddy. For each one we also attach its direct neighbours, the TechNova node it matched, and the chain of nodes in between (its orders and products). That is the <b>evidence</b>.</p>
+    </li>
+    <li>
+      <span class="file">llm.py · generate_answer()</span>
+      <h3>LLM call #2: write the answer from the data only</h3>
+      <p>We send the AI the question, the query, and the retrieved data, with a strict instruction: <i>"Answer using ONLY this data. If it isn't there, say it's not available. No outside knowledge."</i></p>
+      <p>It answered: <i>"The customers who bought products from TechNova are Rahul Sharma, Priya Nair and Sneha Reddy."</i></p>
+    </li>
+    <li>
+      <span class="file">static/index.html</span>
+      <h3>The web page shows it</h3>
+      <p>The page shows the answer, chips for the retrieved nodes, and the graph query (under "View graph query"). On the graph map it lights up the full chain, customers → orders → products → TechNova, and dims everything else.</p>
+    </li>
+  </ol>
+
+  <div class="tip"><b>The key idea to say in an interview:</b> the AI is used twice, once to <i>understand</i> the question and once to <i>phrase</i> the answer. The actual fact-finding is done by normal, predictable Python code on the graph. That split is what keeps the answers accurate.</div>
+</section>
+
+<!-- 4 -->
+<section id="files">
+  <h2><span class="num">4</span>The files and what each one does</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>File</th><th>Job</th></tr>
+      <tr><td><code>data/ecommerce.json</code></td><td>The sample shop data: 5 brands, 4 categories, 4 vendors, 12 products, 5 customers, 8 orders, plus the list of relationships.</td></tr>
+      <tr><td><code>graph.py</code></td><td>Builds the graph from the JSON, creates the schema, and runs graph queries (filters, walking paths, collecting evidence).</td></tr>
+      <tr><td><code>llm.py</code></td><td>The two AI calls to Groq: question → query, and data → answer. Holds the prompts.</td></tr>
+      <tr><td><code>main.py</code></td><td>The FastAPI server. Connects everything and exposes the web addresses (endpoints).</td></tr>
+      <tr><td><code>static/index.html</code></td><td>The web UI: chat, graph map, light/dark theme.</td></tr>
+      <tr><td><code>sample_questions.txt</code></td><td>The 7 sample questions (also shown as buttons in the UI).</td></tr>
+      <tr><td><code>run_samples.py</code></td><td>Runs every sample question end to end and saves the results to <code>sample_results.md</code>.</td></tr>
+      <tr><td><code>.env</code></td><td>Settings: Groq API key, model name, data file path. Kept out of the code.</td></tr>
+      <tr><td><code>README.md</code></td><td>Setup and run instructions.</td></tr>
+    </table>
+  </div>
+
+  <h3>The web addresses (endpoints)</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Address</th><th>What it does</th></tr>
+      <tr><td><code>GET /</code></td><td>The web page.</td></tr>
+      <tr><td><code>POST /ask</code></td><td>The full pipeline: question in, answer out.</td></tr>
+      <tr><td><code>POST /query</code></td><td>Run a graph query directly, without the AI (useful for testing).</td></tr>
+      <tr><td><code>GET /search?text=banana</code></td><td>Find every node containing a word.</td></tr>
+      <tr><td><code>GET /schema</code></td><td>Node types, properties, relationships.</td></tr>
+      <tr><td><code>GET /graph</code></td><td>All nodes and edges (the UI uses this to draw the map).</td></tr>
+      <tr><td><code>GET /stats</code>, <code>GET /samples</code></td><td>Counts for the header, and the sample questions.</td></tr>
+      <tr><td><code>POST /reload</code></td><td>Rebuild the graph after editing the data file.</td></tr>
+      <tr><td><code>/docs</code></td><td>Auto-generated API test page from FastAPI.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="why">
+  <h2><span class="num">5</span>Design decisions and why</h2>
+  <p class="lead">Interviewers care more about <i>why</i> than <i>what</i>. These are your talking points.</p>
+
+  <div class="card">
+    <h3>Why NetworkX and not Neo4j?</h3>
+    <p>The task allowed either. NetworkX runs inside Python with nothing to install, so anyone can run the project in two minutes. The dataset is small, so an in-memory graph is fast. For a real shop with millions of records, I'd move to Neo4j, a proper graph database that saves data to disk and has its own query language, Cypher.</p>
+
+    <h3>Why does the AI write a small JSON query instead of Python code?</h3>
+    <p><b>Safety and control.</b> If the AI wrote Python and we ran it, a bad or tricked answer could run anything on the server. With JSON, the AI can only fill in a fixed format (find / where / related), and our own code decides what actually runs. Wrong output can at worst return no results; it can't do damage.</p>
+
+    <h3>Why is nothing hard-coded?</h3>
+    <p>The entity types, their properties and the relationships all come from the JSON file. The schema sent to the AI is generated from the graph each time. To add, say, a "Warehouse" entity, you only edit the data file: no code changes. The model, API key and file paths live in <code>.env</code>.</p>
+
+    <h3>How do we stop the AI from making things up?</h3>
+    <ul class="clean">
+      <li>The facts come from Python code, not from the AI.</li>
+      <li>The answer prompt says "use ONLY this data, otherwise say it's not available".</li>
+      <li>We send the evidence (the matched nodes and the path to them), so the AI doesn't have to guess.</li>
+      <li><code>temperature=0</code>, so the AI gives consistent, less "creative" output.</li>
+    </ul>
+
+    <h3>Why two AI calls instead of one?</h3>
+    <p>One call can't both understand the question and know the data: the AI doesn't have our data until we fetch it. So the first call plans the search, our code fetches, and the second call explains the result.</p>
+
+    <h3>Why Groq?</h3>
+    <p>It offers open-source models for free with a simple API. The model name is a setting, so switching models (or providers) is easy.</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="banana">
+  <h2><span class="num">6</span>The "banana" requirement</h2>
+  <div class="card">
+    <p>The task said: put the word <b>banana</b> in the graph exactly 5 times, and make it findable through the system. It's a check that you actually loaded your own data and that retrieval works.</p>
+    <p>It appears 5 times, each in a different node:</p>
+    <ul class="clean">
+      <li>Brand: <b>Banana</b> Leaf Organics</li>
+      <li>Vendor: <b>Banana</b> Valley Farms</li>
+      <li>Product: <b>Banana</b> Chips</li>
+      <li>Product: <b>Banana</b> Bread Mix</li>
+      <li>Product: <b>Banana</b> Smoothie Powder</li>
+    </ul>
+    <p>How to show it: ask <i>"Where does the word banana appear in the knowledge graph and how many times?"</i>. The AI writes a query that searches every property of every node (<code>"any": "banana"</code>), finds all 5, and the answer lists them with the total. You can also open <code>/search?text=banana</code>.</p>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="problems">
+  <h2><span class="num">7</span>Problems I hit and how I solved them</h2>
+  <p class="lead">Great interview material: it shows you tested and debugged, not just wrote code.</p>
+  <div class="card">
+    <h3>1. The AI said "not available" even though the graph found the right answer</h3>
+    <p>For "customers who bought TechNova", the graph correctly found 3 customers. But the AI only saw each customer and their orders. It couldn't see the link to TechNova, so it (correctly!) refused to claim it. <b>Fix:</b> retrieval now attaches the evidence, meaning the TechNova node that matched and the chain of orders and products in between. The answer became correct, and it also let the UI light up the full path.</p>
+
+    <h3>2. Rate limit on the free tier</h3>
+    <p>Groq's free plan allows about 8,000 tokens per minute. Running all samples quickly hit that limit. <b>Fix:</b> made the data sent to the AI more compact, added automatic retries, and a short pause between sample questions.</p>
+
+    <h3>3. The model was removed</h3>
+    <p>The first model we picked (Llama 3.3) was no longer on Groq. Because the model name is a setting in <code>.env</code>, switching to <code>openai/gpt-oss-120b</code> took one line. That's a good example of why nothing should be hard-coded.</p>
+
+    <h3>4. A question the query format can't express</h3>
+    <p>"Orders that are pending <i>or</i> shipped" needs an OR, which the simple format doesn't support. I kept the format simple and chose sample questions it can handle. This is listed under limitations.</p>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="limits">
+  <h2><span class="num">8</span>Limitations and how I'd improve it</h2>
+  <p class="lead">Being honest about limits looks mature in an interview.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Limitation</th><th>How to improve</th></tr>
+      <tr><td>The query format has no OR, counting or sorting; the AI does simple maths itself from the data.</td><td>Add operators like "or", "count", "sort", or move to Neo4j + Cypher, which has all of these.</td></tr>
+      <tr><td>The graph lives in memory and is rebuilt from a file.</td><td>Use a real graph database (Neo4j) for large or changing data.</td></tr>
+      <tr><td>Every query scans all nodes. That's fine for 38, slow for millions.</td><td>Indexes by type and name, or a graph database.</td></tr>
+      <tr><td>Names must roughly match ("TechNova"). A typo like "Tek Nova" finds nothing.</td><td>Fuzzy matching or embeddings (meaning-based search) to find the closest names.</td></tr>
+      <tr><td>No memory between questions ("what about their orders?").</td><td>Send recent chat history to the AI.</td></tr>
+      <tr><td>The AI's query isn't checked against the schema before running.</td><td>Validate it, and ask the AI to retry if it uses an unknown type or relationship.</td></tr>
+      <tr><td>No login or automated tests.</td><td>Add authentication and unit tests for <code>graph.py</code>.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 9 -->
+<section id="questions">
+  <h2><span class="num">9</span>Likely interview questions (click to see an answer)</h2>
+
+  <details><summary>Walk me through your project.</summary><div class="ans">
+    <p>"I built a knowledge graph of an e-commerce store, with products, brands, categories, vendors, customers and orders, using NetworkX. A user asks a question in English. An LLM on Groq converts it into a small JSON graph query. My Python code runs that query on the graph and collects the matching nodes with evidence. A second LLM call writes the answer using only that data. It's served with FastAPI and has a web UI that highlights the used nodes on a graph map."</p>
+  </div></details>
+
+  <details><summary>What is a knowledge graph, and why use one instead of tables?</summary><div class="ans">
+    <p>It stores data as entities connected by named relationships. It's great when questions are about <i>connections</i>, like "customers who bought products of brand X supplied by vendor Y". In tables that needs several joins. In a graph you just follow the links.</p>
+  </div></details>
+
+  <details><summary>How does the LLM know what's in your graph?</summary><div class="ans">
+    <p>I send it the <b>schema</b>, a list of node types, their properties and the relationships. It's generated automatically from the graph, so if the data changes, the AI's view updates too. I never send the whole dataset in that first call, only the structure.</p>
+  </div></details>
+
+  <details><summary>How do you make sure answers only come from the graph?</summary><div class="ans">
+    <p>Retrieval is done by my code, not the AI. The answering prompt tells the AI to use only the supplied data and to say "not available" otherwise. I pass the matched evidence, and use temperature 0. I tested it: when evidence was missing, the AI said "not available" instead of guessing.</p>
+  </div></details>
+
+  <details><summary>What happens if the LLM returns a bad query?</summary><div class="ans">
+    <p>If it isn't valid JSON, the API returns a clear error. If it's valid but uses the wrong names, the query simply finds nothing and the AI says the information isn't available. Because it's JSON and not code, a bad query can't harm the system. An improvement would be validating it against the schema and retrying.</p>
+  </div></details>
+
+  <details><summary>Why not let the LLM write Cypher or Python directly?</summary><div class="ans">
+    <p>Running AI-written code is a security risk (someone could trick it into writing harmful code). A fixed JSON format limits the AI to safe operations. With Neo4j, Cypher would be natural, and I'd run it with read-only permissions.</p>
+  </div></details>
+
+  <details><summary>How does the "path" in a query work?</summary><div class="ans">
+    <p>It's a list of relationship names to follow in order. From a customer, <code>["PLACED_BY", "CONTAINS", "MADE_BY"]</code> goes customer → their orders → products in those orders → those products' brands. The code follows each link in either direction, so the AI doesn't need to know which way an arrow points.</p>
+  </div></details>
+
+  <details><summary>How would this scale to millions of products?</summary><div class="ans">
+    <p>Move the graph to Neo4j (on disk, indexed, with Cypher). Add indexes on names. Cap the number of results sent to the AI so prompts stay small. Cache common questions. The overall flow stays the same; only the storage and query engine change.</p>
+  </div></details>
+
+  <details><summary>What is RAG, and is this RAG?</summary><div class="ans">
+    <p>RAG means "retrieve first, then generate", so the AI answers from real, fetched data. Yes, this is Graph RAG: the retrieval step is a graph search instead of a document or vector search.</p>
+  </div></details>
+
+  <details><summary>How did you satisfy the banana requirement?</summary><div class="ans">
+    <p>"Banana" appears exactly 5 times, in 1 brand, 1 vendor and 3 product names, each in a separate node. The query language has an "any" field that searches all properties, so asking where banana appears returns all 5. There's also a <code>/search</code> endpoint.</p>
+  </div></details>
+
+  <details><summary>What was the hardest bug?</summary><div class="ans">
+    <p>The "TechNova customers" case. Retrieval was right, but the AI couldn't see why those customers matched, so it refused to answer. I fixed it by sending evidence: the matched brand and the path of orders and products. It taught me that grounding needs the <i>proof</i>, not just the result.</p>
+  </div></details>
+
+  <details><summary>Why FastAPI?</summary><div class="ans">
+    <p>It's simple, fast, and gives automatic request checking and an interactive docs page at <code>/docs</code>, which is handy for testing and demos.</p>
+  </div></details>
+
+  <details><summary>What would you add with more time?</summary><div class="ans">
+    <p>Neo4j backend, query validation with retry, fuzzy name matching, chat memory for follow-up questions, automated tests, and an evaluation set of questions with expected answers to measure accuracy.</p>
+  </div></details>
+</section>
+
+<!-- 10 -->
+<section id="demo">
+  <h2><span class="num">10</span>How to run it and a demo script (for the Loom video)</h2>
+<pre>pip install -r requirements.txt
+<span class="c"># put GROQ_API_KEY=... in the .env file</span>
+uvicorn main:app --reload --port 8080
+<span class="c"># open http://127.0.0.1:8080</span></pre>
+
+  <div class="card">
+    <h3>Suggested 5-minute video</h3>
+    <ol>
+      <li><b>30s, the goal:</b> "A knowledge graph of an online store that you can question in plain English, with answers grounded in the graph."</li>
+      <li><b>1 min, the data:</b> open <code>data/ecommerce.json</code>. Show the entities and the <code>relationships</code> list. Mention nothing is hard-coded.</li>
+      <li><b>1 min, the code:</b> <code>graph.py</code> (build + run query), <code>llm.py</code> (two prompts), <code>main.py</code> (the <code>/ask</code> flow in 3 lines).</li>
+      <li><b>2 min, live demo:</b> in the UI, ask "Which products from UrbanStep are supplied by Global Traders?" and "Which customers bought products from TechNova?". Open "View graph query" and point out the lit-up path on the map.</li>
+      <li><b>30s, banana:</b> ask the banana question and show all 5.</li>
+      <li><b>30s, wrap-up:</b> mention <code>sample_results.md</code>, one bug you fixed, and one improvement you'd make.</li>
+    </ol>
+  </div>
+  <div class="warn"><b>Before recording:</b> make sure the server is running and your Groq key works (ask one question first). Don't click many questions very fast: the free tier has a per-minute limit.</div>
+</section>
+
+<!-- 11 -->
+<section id="cheat">
+  <h2><span class="num">11</span>Cheat sheet: numbers to remember</h2>
+  <div class="stats">
+    <div class="stat"><b>6</b><span>entity types</span></div>
+    <div class="stat"><b>38</b><span>nodes</span></div>
+    <div class="stat"><b>65</b><span>relationships (edges)</span></div>
+    <div class="stat"><b>5</b><span>relationship types</span></div>
+    <div class="stat"><b>5</b><span>"banana" occurrences</span></div>
+    <div class="stat"><b>2</b><span>LLM calls per question</span></div>
+    <div class="stat"><b>7</b><span>sample questions</span></div>
+  </div>
+  <div class="card">
+    <p><b>Tech stack:</b> Python · NetworkX (graph) · FastAPI (API + web page) · Groq running <code>openai/gpt-oss-120b</code> (LLM) · vis-network (graph drawing in the browser).</p>
+    <p><b>Relationships:</b> Product <code>MADE_BY</code> Brand · Product <code>BELONGS_TO</code> Category · Product <code>SUPPLIED_BY</code> Vendor · Order <code>PLACED_BY</code> Customer · Order <code>CONTAINS</code> Product.</p>
+    <p><b>One sentence summary:</b> "The LLM understands the question and phrases the answer; the graph code finds the facts."</p>
+  </div>
+</section>
+
+<footer>GraphMind project guide</footer>
+</div>
+</body>
+</html>

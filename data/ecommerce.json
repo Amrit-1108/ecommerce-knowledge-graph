@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Brand": [
+      {"id": "B1", "name": "UrbanStep", "country": "India"},
+      {"id": "B2", "name": "TechNova", "country": "USA"},
+      {"id": "B3", "name": "HomeNest", "country": "Germany"},
+      {"id": "B4", "name": "FreshBite", "country": "India"},
+      {"id": "B5", "name": "Banana Leaf Organics", "country": "India"}
+    ],
+    "Category": [
+      {"id": "C1", "name": "Footwear"},
+      {"id": "C2", "name": "Electronics"},
+      {"id": "C3", "name": "Home & Kitchen"},
+      {"id": "C4", "name": "Grocery"}
+    ],
+    "Vendor": [
+      {"id": "V1", "name": "Prime Distributors", "city": "Mumbai", "rating": 4.5},
+      {"id": "V2", "name": "Global Traders", "city": "Delhi", "rating": 4.1},
+      {"id": "V3", "name": "QuickSupply Co", "city": "Bangalore", "rating": 3.9},
+      {"id": "V4", "name": "Banana Valley Farms", "city": "Kochi", "rating": 4.7}
+    ],
+    "Product": [
+      {"id": "P1", "name": "Running Shoes", "price": 3499, "stock": 40, "brand": "B1", "category": "C1", "vendors": ["V1", "V2"]},
+      {"id": "P2", "name": "Leather Sandals", "price": 1999, "stock": 25, "brand": "B1", "category": "C1", "vendors": ["V2"]},
+      {"id": "P3", "name": "Sports Sneakers", "price": 2799, "stock": 0, "brand": "B1", "category": "C1", "vendors": ["V1"]},
+      {"id": "P4", "name": "Wireless Earbuds", "price": 4999, "stock": 60, "brand": "B2", "category": "C2", "vendors": ["V1", "V3"]},
+      {"id": "P5", "name": "Smart Watch", "price": 8999, "stock": 15, "brand": "B2", "category": "C2", "vendors": ["V3"]},
+      {"id": "P6", "name": "Bluetooth Speaker", "price": 2499, "stock": 30, "brand": "B2", "category": "C2", "vendors": ["V2", "V3"]},
+      {"id": "P7", "name": "Non-stick Frying Pan", "price": 1299, "stock": 50, "brand": "B3", "category": "C3", "vendors": ["V2"]},
+      {"id": "P8", "name": "Electric Kettle", "price": 1799, "stock": 20, "brand": "B3", "category": "C3", "vendors": ["V1", "V2"]},
+      {"id": "P9", "name": "Masala Oats", "price": 199, "stock": 200, "brand": "B4", "category": "C4", "vendors": ["V3"]},
+      {"id": "P10", "name": "Banana Chips", "price": 149, "stock": 150, "brand": "B4", "category": "C4", "vendors": ["V4"]},
+      {"id": "P11", "name": "Banana Bread Mix", "price": 349, "stock": 80, "brand": "B5", "category": "C4", "vendors": ["V4", "V3"]},
+      {"id": "P12", "name": "Banana Smoothie Powder", "price": 499, "stock": 45, "brand": "B5", "category": "C4", "vendors": ["V4"]}
+    ],
+    "Customer": [
+      {"id": "CU1", "name": "Rahul Sharma", "city": "Mumbai", "email": "rahul@example.com"},
+      {"id": "CU2", "name": "Priya Nair", "city": "Kochi", "email": "priya@example.com"},
+      {"id": "CU3", "name": "Amit Verma", "city": "Delhi", "email": "amit@example.com"},
+      {"id": "CU4", "name": "Sneha Reddy", "city": "Hyderabad", "email": "sneha@example.com"},
+      {"id": "CU5", "name": "Karan Mehta", "city": "Bangalore", "email": "karan@example.com"}
+    ],
+    "Order": [
+      {"id": "O1", "date": "2026-08-01", "status": "delivered", "payment": "UPI", "customer": "CU1", "products": ["P1", "P4"]},
+      {"id": "O2", "date": "2026-08-03", "status": "delivered", "payment": "Card", "customer": "CU2", "products": ["P10", "P11"]},
+      {"id": "O3", "date": "2026-08-05", "status": "shipped", "payment": "COD", "customer": "CU3", "products": ["P7", "P8"]},
+      {"id": "O4", "date": "2026-08-10", "status": "cancelled", "payment": "Card", "customer": "CU1", "products": ["P5"]},
+      {"id": "O5", "date": "2026-08-12", "status": "delivered", "payment": "UPI", "customer": "CU4", "products": ["P2", "P6", "P9"]},
+      {"id": "O6", "date": "2026-08-15", "status": "pending", "payment": "UPI", "customer": "CU5", "products": ["P12", "P9"]},
+      {"id": "O7", "date": "2026-08-20", "status": "delivered", "payment": "Card", "customer": "CU2", "products": ["P4", "P6"]},
+      {"id": "O8", "date": "2026-08-22", "status": "shipped", "payment": "COD", "customer": "CU3", "products": ["P1", "P3"]}
+    ]
+  },
+  "relationships": [
+    {"from": "Product", "field": "brand", "to": "Brand", "type": "MADE_BY"},
+    {"from": "Product", "field": "category", "to": "Category", "type": "BELONGS_TO"},
+    {"from": "Product", "field": "vendors", "to": "Vendor", "type": "SUPPLIED_BY"},
+    {"from": "Order", "field": "customer", "to": "Customer", "type": "PLACED_BY"},
+    {"from": "Order", "field": "products", "to": "Product", "type": "CONTAINS"}
+  ]
+}

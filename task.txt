@@ -1,0 +1,53 @@
+Objective
+
+Build a simple Knowledge Graph for an e-commerce dataset and create an AI-powered retrieval system.
+
+Requirements
+Use Python
+
+Use a graph database/library such as Neo4j or NetworkX
+
+Create entities such as:
+
+Products
+
+Brands
+
+Categories
+
+Vendors
+
+Orders
+
+Customers
+
+Define relationships between the entities.
+
+Build a retrieval layer that can answer questions from the graph.
+
+Connect an LLM such as OpenAI/Claude/Gemini to convert natural-language questions into graph queries.
+
+Ensure answers are based only on retrieved graph data.
+
+Add the word banana as a node/value in the knowledge graph exactly 5 times. The word should be retrievable through the system. 
+
+Example
+Question:
+
+Which products from Brand X are supplied by Vendor Y?
+
+Flow:
+
+User Question → LLM → Graph Query → Retrieve Data → LLM → Answer
+
+Deliverables
+Please submit all of the following:
+
+Working Python project
+Sample e-commerce dataset
+Knowledge Graph implementation
+Retrieval system
+LLM integration
+At least 5 sample questions with their results
+README file with complete setup and execution instructions
+Loom video explaining your implementation

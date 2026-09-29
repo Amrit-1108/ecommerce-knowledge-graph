@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+networkx
+groq
+python-dotenv
+httpx
